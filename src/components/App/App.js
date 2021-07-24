@@ -17,6 +17,14 @@ export default class App extends Component {
     currentPage: null,
     selectedImageSrc: null,
     selectedImageTags: null,
+    modalOpened: false,
+  }
+
+  styles = {
+    img: {
+      maxWidth: 'calc(100vw - 48px)',
+      maxHeight: 'calc(100vh - 24px)',
+    },
   }
 
   handleSubmit = (searchQuery) => {
@@ -57,7 +65,15 @@ export default class App extends Component {
   }
 
   handleImgClick = (largeImageURL, tags) => {
-    this.setState({ selectedImageSrc: largeImageURL, selectedImageTags: tags })
+    this.setState({
+      selectedImageSrc: largeImageURL,
+      selectedImageTags: tags,
+      modalOpened: true,
+    })
+  }
+
+  closeModal = () => {
+    this.setState({ modalOpened: false })
   }
 
   render() {
@@ -66,6 +82,7 @@ export default class App extends Component {
       queryStatus,
       selectedImageSrc,
       selectedImageTags,
+      modalOpened,
     } = this.state
 
     return (
@@ -89,8 +106,14 @@ export default class App extends Component {
 
         {queryStatus === 'pending' && <Spinner />}
 
-        {selectedImageSrc && (
-          <Modal largeImageURL={selectedImageSrc} tags={selectedImageTags} />
+        {modalOpened && (
+          <Modal onClose={this.closeModal}>
+            <img
+              style={this.styles.img}
+              src={selectedImageSrc}
+              alt={selectedImageTags}
+            />
+          </Modal>
         )}
       </>
     )
