@@ -1,4 +1,5 @@
 import css from './ImageGalleryItem.module.css'
+import PropTypes from 'prop-types'
 
 function ImageGalleryItem({ webformatURL, tags, onImgClick }) {
   return (
@@ -14,3 +15,9 @@ function ImageGalleryItem({ webformatURL, tags, onImgClick }) {
 }
 
 export default ImageGalleryItem
+
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  onImgClick: PropTypes.func.isRequired,
+}
